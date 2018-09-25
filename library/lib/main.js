@@ -2,6 +2,7 @@ import DOMNodeCollection from "./dom_node_collection.js";
 
 
 const delayedFunctions = [];
+let documentUp = false;
 
 document.addEventListener('DOMContentLoaded', delayedInvoker );
 
@@ -15,7 +16,11 @@ function findElement(el) {
 }
 
 function pileOn(el) {
-  delayedFunctions.push(el);
+  if (document.readyState === 'complete') {
+    el();
+  } else {
+    delayedFunctions.push(el);
+  }
 }
 
 window.$l = function (el) {
@@ -38,6 +43,7 @@ window.$l.extend = function (obj, ...objs) {
 };
 
 window.$l.ajax = function(options) {
+  debugger
   const defaults = {
     url: window.location.href,
     success: function() {console.log('no callback given');},
@@ -46,7 +52,9 @@ window.$l.ajax = function(options) {
     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
     error: function() {console.log('no callback given');}
   };
+  debugger
   const ajaxValues = window.$l.extend(defaults, options);
+  debugger
   const xhr = new XMLHttpRequest();
   xhr.open(ajaxValues.method, ajaxValues.url);
   xhr.onload = function() {

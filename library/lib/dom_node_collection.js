@@ -82,9 +82,9 @@ class DOMNodeCollection {
   }
 
   children() {
-    let childs = [];
-    this.each( (parent) => childs = childs.concat(Array.from(parent.children)));
-    return new DOMNodeCollection(childs);
+    let scamps = [];
+    this.each( (parent) => scamps = scamps.concat(Array.from(parent.children)));
+    return new DOMNodeCollection(scamps);
   }
 
   parent() {
