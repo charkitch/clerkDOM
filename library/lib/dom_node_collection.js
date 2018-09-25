@@ -98,13 +98,13 @@ class DOMNodeCollection {
   on(type, callback) {
     this.each( (el) => {
       el.addEventListener(type, callback);
-      el[`jqlCb${type}`] = callback;
+      el[`clerkdomCb${type}`] = callback;
     });
   }
 
   off(type) {
     this.each( (el) => {
-      el.removeEventListener(type, el[`jqlCb${type}`]);
+      el.removeEventListener(type, el[`clerkdomCb${type}`]);
     });
   }
 
@@ -113,39 +113,13 @@ class DOMNodeCollection {
     return this;
   }
 
-  first () {
+  first() {
     return this.elArray[0];
   }
 
-  // removeChildren(parent) {
-  //   const children = Array.from(parent.childNodes);
-  //   children.forEach( (child) => parent.removeChild(child) );
-  // }
+
 }
 
 
 
 export default DOMNodeCollection;
-
-
-
-
-
-
-
-
-
-// html(string) {
-//
-//
-//   if (string === undefined) {
-//     return this.elArray[0];
-//   } else {
-//     const element = document.createTextNode(string);
-//     for (let i = 0; i < this.elArray.length; i++) {
-//       const currEl = this.elArray[i];
-//       this.removeChildren(currEl);
-//
-//     }
-//   }
-// }

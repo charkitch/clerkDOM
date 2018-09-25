@@ -6,12 +6,12 @@ let documentUp = false;
 
 document.addEventListener('DOMContentLoaded', delayedInvoker );
 
-function findSelector(el) {
-  const elArray = Array.from(document.querySelectorAll(el));
+function findSelector(cssSelector) {
+  const elArray = Array.from(document.querySelectorAll(cssSelector));
   return new DOMNodeCollection(elArray);
 }
 
-function findElement(el) {
+function buildWrap(el) {
   return new DOMNodeCollection([el]);
 }
 
@@ -27,7 +27,7 @@ window.$l = function (el) {
   if ( (typeof el) === 'string' ) {
     return findSelector(el);
   } else if (el instanceof HTMLElement) {
-    return findElement(el);
+    return buildWrap(el);
   } else if (typeof el === 'function') {
     pileOn(el);
   }
@@ -43,7 +43,6 @@ window.$l.extend = function (obj, ...objs) {
 };
 
 window.$l.ajax = function(options) {
-  debugger
   const defaults = {
     url: window.location.href,
     success: function() {console.log('no callback given');},
@@ -52,7 +51,6 @@ window.$l.ajax = function(options) {
     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
     error: function() {console.log('no callback given');}
   };
-  debugger
   const ajaxValues = window.$l.extend(defaults, options);
   debugger
   const xhr = new XMLHttpRequest();
