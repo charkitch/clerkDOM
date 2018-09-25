@@ -61,15 +61,17 @@ class DOMNodeCollection {
   }
 
   removeOneClass(classToRemove) {
-    return this.each( (el) => el.className = el.className.replace(classToRemove, ''));
+    return this.each( (el) =>
+      el.className = el.className.replace(classToRemove, ''));
   }
 
   find (selector) {
-    let stuffHolder =[];
+    let gathered =[];
     this.each( (parent) => {
-        stuffHolder = stuffHolder.concat(Array.from(parent.querySelectorAll(selector)));
+        gathered = gathered
+          .concat(Array.from(parent.querySelectorAll(selector)));
     });
-    return new DOMNodeCollection(stuffHolder);
+    return new DOMNodeCollection(gathered);
   }
 
   remove () {
@@ -123,7 +125,7 @@ class DOMNodeCollection {
 
 
 
-module.exports = DOMNodeCollection;
+export default DOMNodeCollection;
 
 
 

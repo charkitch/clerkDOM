@@ -1,21 +1,33 @@
-const DOMNodeCollection = require("./dom_node_collection.js");
+import DOMNodeCollection from "./dom_node_collection.js";
+
 
 const delayedFunctions = [];
 
 document.addEventListener('DOMContentLoaded', delayedInvoker );
 
+function findSelector(el) {
+  const elArray = Array.from(document.querySelectorAll(el));
+  return new DOMNodeCollection(elArray);
+}
+
+function findElement(el) {
+  return new DOMNodeCollection([el]);
+}
+
+function pileOn(el) {
+  delayedFunctions.push(el);
+}
 
 window.$l = function (el) {
   if ( (typeof el) === 'string' ) {
-    const elArray = Array.from(document.querySelectorAll(el));
-    return new DOMNodeCollection(elArray);
+    return findSelector(el);
   } else if (el instanceof HTMLElement) {
-    return new DOMNodeCollection([el]);
+    return findElement(el);
   } else if (typeof el === 'function') {
-
-    delayedFunctions.push(el);
+    pileOn(el);
   }
 };
+
 
 window.$l.extend = function (obj, ...objs) {
   for (let i = 0; i < objs.length; i++) {
