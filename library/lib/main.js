@@ -52,12 +52,11 @@ window.$l.ajax = function(options) {
     error: function() {console.log('no callback given');}
   };
   const ajaxValues = window.$l.extend(defaults, options);
-  debugger
   const xhr = new XMLHttpRequest();
   xhr.open(ajaxValues.method, ajaxValues.url);
   xhr.onload = function() {
     if (xhr.status < 400) {
-      ajaxValues.success(JSON.parse(xhr.response).data);
+      ajaxValues.success(JSON.parse(xhr.response));
     } else {
       ajaxValues.error(xhr);
     }

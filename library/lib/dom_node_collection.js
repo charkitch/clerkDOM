@@ -3,12 +3,12 @@ class DOMNodeCollection {
     this.elArray = elArray;
   }
 
-  html(string) {
-    if (string === undefined) {
+  html(str) {
+    if (str === undefined) {
       return this.first().innerHTML;
     } else {
       this.elArray.forEach( function (el) {
-        el.innerHTML = string;
+        el.innerHTML = str;
       });
     }
   }
@@ -26,7 +26,7 @@ class DOMNodeCollection {
         prospectiveParents.innerHTML += element.outerHTML;
       }
       else if (element instanceof DOMNodeCollection) {
-        element.each( function (addedElement) {
+        element.each( (addedElement) => {
           prospectiveParents.innerHTML += addedElement.outerHTML;
         });
       }
@@ -36,10 +36,10 @@ class DOMNodeCollection {
 
   attr (attributeName, changedValue) {
     if (changedValue === undefined) {
-      return this.first().attributes[attributeName];
+      return this.first().getAttribute(attributeName);
     } else {
       return this.each( (el) => {
-        el.attributes[attributeName] = changedValue;
+        el.setAttribute(attributeName, changedValue);
       });
     }
   }
@@ -65,7 +65,7 @@ class DOMNodeCollection {
       el.className = el.className.replace(classToRemove, ''));
   }
 
-  find (selector) {
+  find(selector) {
     let gathered =[];
     this.each( (parent) => {
         gathered = gathered
@@ -74,11 +74,10 @@ class DOMNodeCollection {
     return new DOMNodeCollection(gathered);
   }
 
-  remove () {
+  remove() {
     this.each( (el) => {
-      el.outerHTML = '';
+      el.parentNode.removeChild(el);
     });
-    return this;
   }
 
   children() {
