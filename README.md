@@ -22,7 +22,7 @@ If the document is loaded immediately invoke the function.
 
 ```$l.ajax```
 
-Merges supplied options params, overwriting defaults if necessery, and issues an XHR request. 
+Merges supplied options params, overwriting defaults if necessary, and issues an XHR request. 
 If a 200 or 304 or other sub 400 status code is received the functions specified under the success keys are executed. 
 Otherwise, error callbacks are. 
 
